@@ -3,14 +3,22 @@ description: Jenkins Manager
 version: 0.1.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
+  stacked: ^2.1.1
+  get_it: ^6.1.1
+
+  http: ^0.13.2
+
+  shared_preferences: ^2.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 flutter:
   uses-material-design: true
