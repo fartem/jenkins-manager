@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
+import 'package:jenkins_manager/main.locator.dart';
+import 'package:jenkins_manager/main.router.dart';
 import 'package:jenkins_manager/views/jenkins_views_view.dart';
 import 'package:stacked/stacked.dart';
-
-import '../main.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -49,7 +48,7 @@ class MainPageState extends State<MainPage> {
 }
 
 class MainPageViewModel extends ChangeNotifier {
-  final _settings = GetIt.I.get<Settings>();
+  final _settings = locator<Settings>();
 
   var state = MainPageViewModelState.loading;
 
@@ -59,7 +58,7 @@ class MainPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSettingsPress(BuildContext context) => Navigator.pushNamed(context, pageSettings);
+  void onSettingsPress(BuildContext context) => Navigator.pushNamed(context, Routes.settingsPage);
 }
 
 enum MainPageViewModelState {

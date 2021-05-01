@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
+import 'package:jenkins_manager/main.locator.dart';
 import 'package:stacked/stacked.dart';
 
 class JenkinsViewsView extends StatefulWidget {
@@ -22,6 +22,14 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
             child: CircularProgressIndicator(),
           );
         }
+        final hasError = model.hasError;
+        if (hasError) {
+          return Center(
+            child: Text(
+              model.error().toString(),
+            ),
+          );
+        }
         return ListView.builder(
           itemBuilder: (context, index) {
             return Text(
@@ -36,8 +44,8 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
 }
 
 class JenkinsViewsViewModel extends FutureViewModel<List<JenkinsView>> {
-  final _jenkinsApi = GetIt.I.get<JenkinsApi>();
-  final _settings = GetIt.I.get<Settings>();
+  final _jenkinsApi = locator<JenkinsApi>();
+  final _settings = locator<Settings>();
 
   @override
   Future<List<JenkinsView>> futureToRun() => _jenkinsApi.fetchJenkinsViewsFrom(_settings.jenkinsAddress());

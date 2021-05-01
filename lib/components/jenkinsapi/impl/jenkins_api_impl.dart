@@ -14,7 +14,9 @@ class JenkinsApiImpl extends JenkinsApi {
       final data = jsonDecode(response.body);
       return data['views'].map((view) => JenkinsView.fromJson(view));
     }
-    return [];
+    throw Exception(
+      'Cannot fetch views from: $url, statusCode: ${response.statusCode}',
+    );
   }
 
   @override

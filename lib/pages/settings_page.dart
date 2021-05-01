@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
 import 'package:stacked/stacked.dart';
+
+import '../main.locator.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class SettingsPageState extends State<StatefulWidget> {
 }
 
 class SettingsPageViewModel extends ChangeNotifier {
-  final Settings _settings = GetIt.I.get<Settings>();
+  final Settings _settings = locator<Settings>();
 
   String jenkinsAddress() => _settings.jenkinsAddress();
 
