@@ -3,16 +3,30 @@ class JenkinsJob {
   final String url;
   final JenkinsJobStatus jenkinsJobStatus;
 
-  JenkinsJob(
+  JenkinsJob._(
     this.name,
     this.url,
     this.jenkinsJobStatus,
   );
+
+  factory JenkinsJob.fromJson(Map<String, dynamic> json) {
+    final lastBuild = json['lastBuild'];
+    final status = lastBuild?['result'] ?? 'NOT_BUILD';
+    return JenkinsJob._(
+      json['name'],
+      '',
+      JenkinsJobStatus.values.firstWhere(
+        (s) => s.toString().contains(status.toLowerCase()),
+        orElse: () => JenkinsJobStatus.not_build,
+      ),
+    );
+  }
 }
 
 enum JenkinsJobStatus {
-  failed,
-  canceled,
-  running,
+  aborted,
+  not_build,
+  failure,
+  unstable,
   success,
 }

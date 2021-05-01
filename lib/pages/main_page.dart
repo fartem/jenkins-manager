@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jenkins_manager/components/navigator/navigator_service.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
 import 'package:jenkins_manager/main.locator.dart';
 import 'package:jenkins_manager/main.router.dart';
@@ -58,7 +59,7 @@ class MainPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSettingsPress(BuildContext context) => Navigator.pushNamed(context, Routes.settingsPage);
+  void onSettingsPress(BuildContext context) => locator<NavigatorService>().navigateTo(Routes.settingsPage);
 }
 
 enum MainPageViewModelState {

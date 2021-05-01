@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
 import 'package:jenkins_manager/components/jenkinsapi/impl/jenkins_api_impl.dart';
+import 'package:jenkins_manager/components/navigator/navigator_service.dart';
 import 'package:jenkins_manager/components/settings/impl/settings_impl.dart';
 import 'package:jenkins_manager/main.locator.dart';
 import 'package:jenkins_manager/main.router.dart';
 import 'package:jenkins_manager/pages/main_page.dart';
 import 'package:jenkins_manager/pages/settings_page.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import 'components/settings/api/settings.dart';
 
@@ -30,6 +30,9 @@ void main() {
   ],
   dependencies: [
     Singleton(
+      classType: NavigatorService,
+    ),
+    Singleton(
       classType: SettingsImpl,
       asType: Settings,
     ),
@@ -48,7 +51,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MainPage(),
-      navigatorKey: StackedService.navigatorKey,
+      navigatorKey: locator<NavigatorService>().navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
     );
   }

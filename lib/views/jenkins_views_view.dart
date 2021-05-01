@@ -4,6 +4,7 @@ import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
 import 'package:jenkins_manager/main.locator.dart';
+import 'package:jenkins_manager/views/jenkins_view_view.dart';
 import 'package:stacked/stacked.dart';
 
 class JenkinsViewsView extends StatefulWidget {
@@ -31,11 +32,9 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
           );
         }
         return ListView.builder(
-          itemBuilder: (context, index) {
-            return Text(
-              model.data![index].name,
-            );
-          },
+          itemBuilder: (context, index) => JenkinsViewView(
+            jenkinsView: model.data![index],
+          ),
           itemCount: model.data!.length,
         );
       },
@@ -48,5 +47,9 @@ class JenkinsViewsViewModel extends FutureViewModel<List<JenkinsView>> {
   final _settings = locator<Settings>();
 
   @override
-  Future<List<JenkinsView>> futureToRun() => _jenkinsApi.fetchJenkinsViewsFrom(_settings.jenkinsAddress());
+  Future<List<JenkinsView>> futureToRun() => _jenkinsApi.fetchJenkinsViewsFrom(
+        _settings.jenkinsAddress(),
+        _settings.jenkinsUser(),
+        _settings.jenkinsToken(),
+      );
 }
