@@ -6,4 +6,6 @@ class NavigatorService {
   Future<void> navigateTo(String routeName) async {
     await navigatorKey.currentState?.pushNamed(routeName);
   }
+
+  void back() => navigatorKey.currentState?.pop();
 }

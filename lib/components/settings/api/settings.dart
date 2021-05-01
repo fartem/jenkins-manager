@@ -1,15 +1,23 @@
-abstract class Settings {
+import 'package:stacked/stacked.dart';
+
+abstract class Settings with ReactiveServiceMixin {
   Future<void> init();
 
-  String jenkinsAddress();
+  JenkinsCredentials jenkinsCredentials();
 
-  Future<void> setJenkinsAddress(String jenkinsAddress);
+  Future<void> setJenkinsCredentials(
+    JenkinsCredentials jenkinsCredentials,
+  );
+}
 
-  String jenkinsUser();
+class JenkinsCredentials {
+  final String address;
+  final String user;
+  final String token;
 
-  Future<void> setJenkinsUser(String jenkinsUser);
-
-  String jenkinsToken();
-
-  Future<void> setJenkinsToken(String jenkinsToken);
+  JenkinsCredentials(
+    this.address,
+    this.user,
+    this.token,
+  );
 }

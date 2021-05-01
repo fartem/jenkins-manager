@@ -10,7 +10,7 @@ class JenkinsViewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<JenkinsViewViewViewModel>.nonReactive(
+    return ViewModelBuilder<JenkinsViewViewViewModel>.reactive(
       viewModelBuilder: () => JenkinsViewViewViewModel(jenkinsView),
       builder: (context, model, widget) {
         return ListTile(

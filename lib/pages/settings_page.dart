@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jenkins_manager/components/navigator/navigator_service.dart';
 import 'package:jenkins_manager/components/settings/api/settings.dart';
 import 'package:stacked/stacked.dart';
 
@@ -21,20 +22,28 @@ class SettingsPageState extends State<StatefulWidget> {
             title: Text(
               'Settings',
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.done,
+                ),
+                onPressed: () => model.setJenkinsCredentials(),
+              ),
+            ],
           ),
           body: ListView(
             children: [
               _inputField(
-                model.jenkinsAddress(),
-                (newText) => model.setJenkinsAddress(newText),
+                model.address,
+                (newText) => model.address = newText,
               ),
               _inputField(
-                model.jenkinsUser(),
-                (newText) => model.setJenkinsUser(newText),
+                model.user,
+                (newText) => model.user = newText,
               ),
               _inputField(
-                model.jenkinsToken(),
-                (newText) => model.setJenkinsToken(newText),
+                model.token,
+                (newText) => model.token = newText,
               ),
             ],
           ),
@@ -57,18 +66,34 @@ class SettingsPageState extends State<StatefulWidget> {
   }
 }
 
-class SettingsPageViewModel extends ChangeNotifier {
+class SettingsPageViewModel extends ReactiveViewModel {
+  final NavigatorService _navigatorService = locator<NavigatorService>();
   final Settings _settings = locator<Settings>();
 
-  String jenkinsAddress() => _settings.jenkinsAddress();
+  late String address;
+  late String user;
+  late String token;
 
-  Future<void> setJenkinsAddress(String jenkinsAddress) => _settings.setJenkinsAddress(jenkinsAddress);
+  SettingsPageViewModel() {
+    final jenkinsCredentials = _settings.jenkinsCredentials();
+    address = jenkinsCredentials.address;
+    user = jenkinsCredentials.user;
+    token = jenkinsCredentials.token;
+  }
 
-  String jenkinsUser() => _settings.jenkinsUser();
+  JenkinsCredentials jenkinsCredentials() => _settings.jenkinsCredentials();
 
-  Future<void> setJenkinsUser(String jenkinsUser) => _settings.setJenkinsUser(jenkinsUser);
+  Future<void> setJenkinsCredentials() async {
+    _settings.setJenkinsCredentials(
+      JenkinsCredentials(
+        address,
+        user,
+        token,
+      ),
+    );
+    _navigatorService.back();
+  }
 
-  String jenkinsToken() => _settings.jenkinsToken();
-
-  Future<void> setJenkinsToken(String jenkinsToken) => _settings.setJenkinsToken(jenkinsToken);
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_settings];
 }

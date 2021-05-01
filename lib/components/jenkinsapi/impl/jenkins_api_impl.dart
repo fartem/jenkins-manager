@@ -4,16 +4,15 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
+import 'package:jenkins_manager/components/settings/api/settings.dart';
 
 class JenkinsApiImpl extends JenkinsApi {
   @override
   Future<List<JenkinsView>> fetchJenkinsViewsFrom(
-    String url,
-    String user,
-    String token,
+    JenkinsCredentials jenkinsCredentials,
   ) async {
-    final link = 'http://$url/api/json?tree=views[name,jobs[name,lastBuild[result]]]';
-    final auth = 'Basic ${base64Encode(utf8.encode('$user:$token'))}';
+    final link = 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs[name,lastBuild[result]]]';
+    final auth = 'Basic ${base64Encode(utf8.encode('${jenkinsCredentials.user}:${jenkinsCredentials.token}'))}';
     final response = await get(
       Uri.parse(link),
       headers: {
@@ -29,7 +28,7 @@ class JenkinsApiImpl extends JenkinsApi {
       return result;
     }
     throw Exception(
-      'Cannot fetch views from: $url, statusCode: ${response.statusCode}',
+      'Cannot fetch views from: ${jenkinsCredentials.address}, statusCode: ${response.statusCode}',
     );
   }
 }

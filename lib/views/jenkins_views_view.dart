@@ -18,38 +18,37 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
     return ViewModelBuilder<JenkinsViewsViewModel>.reactive(
       viewModelBuilder: () => JenkinsViewsViewModel(),
       builder: (context, model, widget) {
-        if (model.isBusy) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        final hasError = model.hasError;
-        if (hasError) {
-          return Center(
-            child: Text(
-              model.error().toString(),
-            ),
-          );
-        }
-        return ListView.builder(
-          itemBuilder: (context, index) => JenkinsViewView(
-            jenkinsView: model.data![index],
-          ),
-          itemCount: model.data!.length,
+        return FutureBuilder<List<JenkinsView>>(
+          future: model.fetchJenkinsViews(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+              itemBuilder: (context, index) => JenkinsViewView(
+                jenkinsView: snapshot.data![index],
+              ),
+              itemCount: snapshot.data!.length,
+            );
+          },
         );
       },
     );
   }
 }
 
-class JenkinsViewsViewModel extends FutureViewModel<List<JenkinsView>> {
+class JenkinsViewsViewModel extends ReactiveViewModel {
   final _jenkinsApi = locator<JenkinsApi>();
   final _settings = locator<Settings>();
 
+  Future<List<JenkinsView>> fetchJenkinsViews() async {
+    return _jenkinsApi.fetchJenkinsViewsFrom(
+      _settings.jenkinsCredentials(),
+    );
+  }
+
   @override
-  Future<List<JenkinsView>> futureToRun() => _jenkinsApi.fetchJenkinsViewsFrom(
-        _settings.jenkinsAddress(),
-        _settings.jenkinsUser(),
-        _settings.jenkinsToken(),
-      );
+  List<ReactiveServiceMixin> get reactiveServices => [_settings];
 }
