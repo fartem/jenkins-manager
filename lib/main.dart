@@ -7,6 +7,7 @@ import 'package:jenkins_manager/main.router.dart';
 import 'package:jenkins_manager/pages/main_page.dart';
 import 'package:jenkins_manager/pages/settings_page.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'components/settings/api/settings.dart';
 
@@ -47,6 +48,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MainPage(),
+      navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
     );
   }

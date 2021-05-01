@@ -24,14 +24,35 @@ class SettingsPageState extends State<StatefulWidget> {
           ),
           body: ListView(
             children: [
-              TextFormField(
-                initialValue: model.jenkinsAddress(),
-                onChanged: (newText) => model.setJenkinsAddress(newText),
+              _inputField(
+                model.jenkinsAddress(),
+                (newText) => model.setJenkinsAddress(newText),
+              ),
+              _inputField(
+                model.jenkinsUser(),
+                (newText) => model.setJenkinsUser(newText),
+              ),
+              _inputField(
+                model.jenkinsToken(),
+                (newText) => model.setJenkinsToken(newText),
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _inputField(
+    String initialValue,
+    Function(String newText) onChanged,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: TextFormField(
+        initialValue: initialValue,
+        onChanged: onChanged,
+      ),
     );
   }
 }
@@ -42,4 +63,12 @@ class SettingsPageViewModel extends ChangeNotifier {
   String jenkinsAddress() => _settings.jenkinsAddress();
 
   Future<void> setJenkinsAddress(String jenkinsAddress) => _settings.setJenkinsAddress(jenkinsAddress);
+
+  String jenkinsUser() => _settings.jenkinsUser();
+
+  Future<void> setJenkinsUser(String jenkinsUser) => _settings.setJenkinsUser(jenkinsUser);
+
+  String jenkinsToken() => _settings.jenkinsToken();
+
+  Future<void> setJenkinsToken(String jenkinsToken) => _settings.setJenkinsToken(jenkinsToken);
 }
