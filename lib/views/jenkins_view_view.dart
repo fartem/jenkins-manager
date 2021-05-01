@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
+import 'package:jenkins_manager/components/navigator/navigator_service.dart';
+import 'package:jenkins_manager/main.locator.dart';
+import 'package:jenkins_manager/main.router.dart';
 import 'package:stacked/stacked.dart';
 
 class JenkinsViewView extends StatelessWidget {
@@ -19,10 +22,6 @@ class JenkinsViewView extends StatelessWidget {
           ),
           title: Text(
             model.jenkinsView.name,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 16,
-            ),
           ),
           subtitle: Text(
             'Jobs: ${model.jenkinsView.jenkinsJobs.length}',
@@ -35,9 +34,16 @@ class JenkinsViewView extends StatelessWidget {
 }
 
 class JenkinsViewViewViewModel extends ChangeNotifier {
+  final _navigatorService = locator<NavigatorService>();
+
   final JenkinsView jenkinsView;
 
   JenkinsViewViewViewModel(this.jenkinsView);
 
-  void jenkinsViewTapped() {}
+  void jenkinsViewTapped() => _navigatorService.navigateTo(
+        Routes.jenkinsViewPage,
+        arguments: JenkinsViewPageArguments(
+          jenkinsJobs: jenkinsView.jenkinsJobs,
+        ),
+      );
 }

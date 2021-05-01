@@ -5,6 +5,7 @@ import 'package:jenkins_manager/components/navigator/navigator_service.dart';
 import 'package:jenkins_manager/components/settings/impl/settings_impl.dart';
 import 'package:jenkins_manager/main.locator.dart';
 import 'package:jenkins_manager/main.router.dart';
+import 'package:jenkins_manager/pages/jenkins_view_page.dart';
 import 'package:jenkins_manager/pages/main_page.dart';
 import 'package:jenkins_manager/pages/settings_page.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -23,6 +24,9 @@ void main() {
     MaterialRoute(
       page: MainPage,
       initial: true,
+    ),
+    MaterialRoute(
+      page: JenkinsViewPage,
     ),
     MaterialRoute(
       page: SettingsPage,
