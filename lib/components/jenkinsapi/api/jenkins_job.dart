@@ -1,7 +1,7 @@
 class JenkinsJob {
   final String name;
   final String url;
-  final JenkinsJobStatus jenkinsJobStatus;
+  JenkinsJobStatus jenkinsJobStatus;
 
   JenkinsJob._(
     this.name,
@@ -14,7 +14,7 @@ class JenkinsJob {
     final status = lastBuild?['result'] ?? 'NOT_BUILD';
     return JenkinsJob._(
       json['name'],
-      '',
+      json['url'],
       JenkinsJobStatus.values.firstWhere(
         (s) => s.toString().contains(status.toLowerCase()),
         orElse: () => JenkinsJobStatus.not_build,
