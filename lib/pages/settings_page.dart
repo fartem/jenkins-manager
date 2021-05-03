@@ -35,14 +35,17 @@ class SettingsPageState extends State<StatefulWidget> {
             children: [
               _inputField(
                 model.address,
+                'Address (starts with http/https)',
                 (newText) => model.address = newText,
               ),
               _inputField(
                 model.user,
+                'User',
                 (newText) => model.user = newText,
               ),
               _inputField(
                 model.token,
+                'Token',
                 (newText) => model.token = newText,
               ),
             ],
@@ -54,6 +57,7 @@ class SettingsPageState extends State<StatefulWidget> {
 
   Widget _inputField(
     String initialValue,
+    String hint,
     Function(String newText) onChanged,
   ) {
     return Padding(
@@ -61,6 +65,9 @@ class SettingsPageState extends State<StatefulWidget> {
       child: TextFormField(
         initialValue: initialValue,
         onChanged: onChanged,
+        decoration: InputDecoration(
+          hintText: hint,
+        ),
       ),
     );
   }

@@ -20,7 +20,7 @@ class JenkinsApiImpl extends JenkinsApi {
         HttpHeaders.authorizationHeader: auth,
       },
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       final data = jsonDecode(response.body);
       final result = <JenkinsView>[];
       for (final rawView in data['views']) {
@@ -46,6 +46,6 @@ class JenkinsApiImpl extends JenkinsApi {
         HttpHeaders.authorizationHeader: auth,
       },
     );
-    return response.statusCode == 201;
+    return response.statusCode == HttpStatus.created;
   }
 }
