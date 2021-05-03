@@ -1,10 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
+import 'package:jenkins_manager/components/jenkinsapi/impl/jenkins_api_impl.dart';
+import 'package:jenkins_manager/components/navigator/navigator_service.dart';
+import 'package:jenkins_manager/components/settings/impl/settings_impl.dart';
+import 'package:jenkins_manager/main.locator.dart';
+import 'package:jenkins_manager/main.router.dart';
+import 'package:jenkins_manager/pages/jenkins_view_page.dart';
+import 'package:jenkins_manager/pages/main_page.dart';
+import 'package:jenkins_manager/pages/settings_page.dart';
+import 'package:stacked/stacked_annotations.dart';
+
+import 'components/settings/api/settings.dart';
+
+const pageSettings = '/settings';
 
 void main() {
-  runApp(MyApp());
+  setupLocator();
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+@StackedApp(
+  routes: [
+    MaterialRoute(
+      page: MainPage,
+      initial: true,
+    ),
+    MaterialRoute(
+      page: JenkinsViewPage,
+    ),
+    MaterialRoute(
+      page: SettingsPage,
+    ),
+  ],
+  dependencies: [
+    Singleton(
+      classType: NavigatorService,
+    ),
+    Singleton(
+      classType: SettingsImpl,
+      asType: Settings,
+    ),
+    LazySingleton(
+      classType: JenkinsApiImpl,
+      asType: JenkinsApi,
+    ),
+  ],
+)
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,36 +54,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(
-        title: 'Jenkins Manager',
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-        ),
-      ),
-      body: Center(
-        child: Text(
-          'Jenkins Manager',
-        ),
-      ),
+      home: MainPage(),
+      navigatorKey: locator<NavigatorService>().navigatorKey,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
     );
   }
 }
