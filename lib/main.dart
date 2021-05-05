@@ -13,8 +13,6 @@ import 'pages/jenkins_view_page.dart';
 import 'pages/main_page.dart';
 import 'pages/settings_page.dart';
 
-const pageSettings = '/settings';
-
 void main() {
   setupLocator();
   runApp(App());

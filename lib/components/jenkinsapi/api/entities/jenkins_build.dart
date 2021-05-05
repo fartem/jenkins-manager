@@ -9,7 +9,7 @@ class JenkinsBuild {
   final duration;
 
   @JsonKey(fromJson: jenkinsBuildStatusFromJson)
-  final result;
+  final JenkinsBuildResult result;
 
   JenkinsBuild(
     this.name,
@@ -25,17 +25,7 @@ JenkinsBuildResult jenkinsBuildStatusFromJson(String? status) {
   if (status == null) {
     return JenkinsBuildResult.running;
   }
-  return JenkinsBuildResult.values.firstWhere(
-    (s) => _enumValueName(s) == status.toLowerCase(),
-    orElse: () => JenkinsBuildResult.notBuild,
-  );
-}
-
-String _enumValueName(enumValue) {
-  final stringRepresentation = enumValue.toString();
-  return stringRepresentation.substring(
-    stringRepresentation.indexOf('.') + 1,
-  );
+  return _jenkinsBuildResultValues[status] ?? JenkinsBuildResult.notBuild;
 }
 
 enum JenkinsBuildResult {
@@ -46,3 +36,12 @@ enum JenkinsBuildResult {
   success,
   running,
 }
+
+const _jenkinsBuildResultValues = {
+  'ABORTED': JenkinsBuildResult.aborted,
+  'NOT_BUILD': JenkinsBuildResult.notBuild,
+  'FAILURE': JenkinsBuildResult.failure,
+  'UNSTABLE': JenkinsBuildResult.unstable,
+  'SUCCESS': JenkinsBuildResult.success,
+  'RUNNING': JenkinsBuildResult.running,
+};

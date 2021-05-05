@@ -1,8 +1,10 @@
 # Jenkins Manager
 
+[![Codemagic](https://api.codemagic.io/apps/60927ef51061817f02ea203f/60927ef51061817f02ea203e/status_badge.svg)](https://codemagic.io/apps/60927ef51061817f02ea203f/60927ef51061817f02ea203e/latest_build)
+
 ## About
 
-App for managing some Jenkins services.
+App for managing some Jenkins actions.
 
 ## Feedback
 
@@ -13,7 +15,7 @@ Right now the project in a development state. If you have an issue or advice ple
 Before build you need to generate `locator` (DI) and `routes` (navigation entitites) for project. Run from a shell:
 
 ```shell
-flutter pub run build_runner build --delete-conflicting-outputs
+flutter pub run build_runner build
 ```
 
 ## How to build app for Android

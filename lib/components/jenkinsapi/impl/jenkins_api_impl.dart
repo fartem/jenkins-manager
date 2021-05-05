@@ -14,11 +14,13 @@ class JenkinsApiImpl extends JenkinsApi {
     JenkinsCredentials jenkinsCredentials,
   ) async {
     final link = 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs]';
-    final auth = 'Basic ${base64Encode(utf8.encode('${jenkinsCredentials.user}:${jenkinsCredentials.token}'))}';
     final response = await get(
       Uri.parse(link),
       headers: {
-        HttpHeaders.authorizationHeader: auth,
+        HttpHeaders.authorizationHeader: _auth(
+          jenkinsCredentials.user,
+          jenkinsCredentials.token,
+        ),
       },
     );
     if (response.statusCode == HttpStatus.ok) {
@@ -30,9 +32,11 @@ class JenkinsApiImpl extends JenkinsApi {
       return result;
     }
     throw Exception(
-      'Cannot fetch views from: ${jenkinsCredentials.address}, statusCode: ${response.statusCode}',
+      'Cannot fetch Jenkins views from: ${jenkinsCredentials.address}, statusCode: ${response.statusCode}',
     );
   }
+
+  String _auth(String user, String token) => 'Basic ${base64Encode(utf8.encode('$user:$token'))}';
 
   @override
   Future<List<JenkinsJob>> fetchJenkinsJobsFor(
@@ -41,11 +45,13 @@ class JenkinsApiImpl extends JenkinsApi {
   ) async {
     final link =
         'http://${jenkinsCredentials.address}/view/${jenkinsView.name}/api/json?tree=jobs[name,url,description,healthReport[description],labelExpression,lastBuild[building,fullDisplayName,result,duration]]';
-    final auth = 'Basic ${base64Encode(utf8.encode('${jenkinsCredentials.user}:${jenkinsCredentials.token}'))}';
     final response = await get(
       Uri.parse(link),
       headers: {
-        HttpHeaders.authorizationHeader: auth,
+        HttpHeaders.authorizationHeader: _auth(
+          jenkinsCredentials.user,
+          jenkinsCredentials.token,
+        ),
       },
     );
     if (response.statusCode == HttpStatus.ok) {
@@ -57,7 +63,7 @@ class JenkinsApiImpl extends JenkinsApi {
       return result;
     }
     throw Exception(
-      'Cannot fetch views from: ${jenkinsCredentials.address}, statusCode: ${response.statusCode}',
+      'Cannot fetch Jenkins jobs from: ${jenkinsCredentials.address}, statusCode: ${response.statusCode}',
     );
   }
 
@@ -67,11 +73,13 @@ class JenkinsApiImpl extends JenkinsApi {
     JenkinsJob jenkinsJob,
   ) async {
     final link = 'http://${jenkinsCredentials.address}/job/${jenkinsJob.name}/build';
-    final auth = 'Basic ${base64Encode(utf8.encode('${jenkinsCredentials.user}:${jenkinsCredentials.token}'))}';
     final response = await post(
       Uri.parse(link),
       headers: {
-        HttpHeaders.authorizationHeader: auth,
+        HttpHeaders.authorizationHeader: _auth(
+          jenkinsCredentials.user,
+          jenkinsCredentials.token,
+        ),
       },
     );
     return response.statusCode == HttpStatus.created;
