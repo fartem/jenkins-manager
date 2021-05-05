@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jenkins_manager/components/navigator/navigator_service.dart';
-import 'package:jenkins_manager/components/settings/api/settings.dart';
 import 'package:stacked/stacked.dart';
 
+import '../components/navigator/navigator_service.dart';
+import '../components/settings/api/settings.dart';
 import '../main.locator.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -16,7 +15,7 @@ class SettingsPageState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsPageViewModel>.reactive(
       viewModelBuilder: () => SettingsPageViewModel(),
-      builder: (context, model, Widget? widget) {
+      builder: (context, model, widget) {
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -33,17 +32,17 @@ class SettingsPageState extends State<StatefulWidget> {
           ),
           body: ListView(
             children: [
-              _inputField(
+              _JenkinsPageViewInputField(
                 model.address,
                 'Address (starts with http/https)',
                 (newText) => model.address = newText,
               ),
-              _inputField(
+              _JenkinsPageViewInputField(
                 model.user,
                 'User',
                 (newText) => model.user = newText,
               ),
-              _inputField(
+              _JenkinsPageViewInputField(
                 model.token,
                 'Token',
                 (newText) => model.token = newText,
@@ -52,23 +51,6 @@ class SettingsPageState extends State<StatefulWidget> {
           ),
         );
       },
-    );
-  }
-
-  Widget _inputField(
-    String initialValue,
-    String hint,
-    Function(String newText) onChanged,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: TextFormField(
-        initialValue: initialValue,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          hintText: hint,
-        ),
-      ),
     );
   }
 }
@@ -103,4 +85,30 @@ class SettingsPageViewModel extends ReactiveViewModel {
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_settings];
+}
+
+class _JenkinsPageViewInputField extends StatelessWidget {
+  final String _initialValue;
+  final String _hint;
+  final Function(String newText) _onChanged;
+
+  _JenkinsPageViewInputField(
+    this._initialValue,
+    this._hint,
+    this._onChanged,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: TextFormField(
+        initialValue: _initialValue,
+        onChanged: _onChanged,
+        decoration: InputDecoration(
+          hintText: _hint,
+        ),
+      ),
+    );
+  }
 }

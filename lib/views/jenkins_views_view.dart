@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
-import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
-import 'package:jenkins_manager/components/settings/api/settings.dart';
-import 'package:jenkins_manager/main.locator.dart';
-import 'package:jenkins_manager/views/jenkins_view_view.dart';
 import 'package:stacked/stacked.dart';
+
+import '../components/jenkinsapi/api/entities/jenkins_view.dart';
+import '../components/jenkinsapi/api/jenkins_api.dart';
+import '../components/settings/api/settings.dart';
+import '../main.locator.dart';
+import 'jenkins_view_view.dart';
 
 class JenkinsViewsView extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
             }
             return ListView.builder(
               itemBuilder: (context, index) => JenkinsViewView(
-                jenkinsView: snapshot.data![index],
+                snapshot.data![index],
               ),
               itemCount: snapshot.data!.length,
             );
@@ -44,7 +44,7 @@ class JenkinsViewsViewModel extends ReactiveViewModel {
   final _settings = locator<Settings>();
 
   Future<List<JenkinsView>> fetchJenkinsViews() async {
-    return _jenkinsApi.fetchJenkinsViewsFrom(
+    return _jenkinsApi.fetchJenkinsViews(
       _settings.jenkinsCredentials(),
     );
   }

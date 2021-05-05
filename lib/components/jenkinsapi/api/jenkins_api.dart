@@ -1,10 +1,15 @@
-import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_job.dart';
-import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_view.dart';
-import 'package:jenkins_manager/components/settings/api/settings.dart';
+import '../../settings/api/settings.dart';
+import 'entities/jenkins_job.dart';
+import 'entities/jenkins_view.dart';
 
 abstract class JenkinsApi {
-  Future<List<JenkinsView>> fetchJenkinsViewsFrom(
+  Future<List<JenkinsView>> fetchJenkinsViews(
     JenkinsCredentials jenkinsCredentials,
+  );
+
+  Future<List<JenkinsJob>> fetchJenkinsJobsFor(
+    JenkinsCredentials jenkinsCredentials,
+    JenkinsView jenkinsView,
   );
 
   Future<bool> runJenkinsJob(

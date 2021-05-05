@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jenkins_manager/components/navigator/navigator_service.dart';
-import 'package:jenkins_manager/components/settings/api/settings.dart';
-import 'package:jenkins_manager/main.locator.dart';
-import 'package:jenkins_manager/main.router.dart';
-import 'package:jenkins_manager/views/jenkins_views_view.dart';
 import 'package:stacked/stacked.dart';
+
+import '../components/navigator/navigator_service.dart';
+import '../components/settings/api/settings.dart';
+import '../main.locator.dart';
+import '../main.router.dart';
+import '../views/jenkins_views_view.dart';
 
 class MainPage extends StatefulWidget {
   @override

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:jenkins_manager/components/jenkinsapi/api/jenkins_api.dart';
-import 'package:jenkins_manager/components/jenkinsapi/impl/jenkins_api_impl.dart';
-import 'package:jenkins_manager/components/navigator/navigator_service.dart';
-import 'package:jenkins_manager/components/settings/impl/settings_impl.dart';
-import 'package:jenkins_manager/main.locator.dart';
-import 'package:jenkins_manager/main.router.dart';
-import 'package:jenkins_manager/pages/jenkins_view_page.dart';
-import 'package:jenkins_manager/pages/main_page.dart';
-import 'package:jenkins_manager/pages/settings_page.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import 'components/jenkinsapi/api/jenkins_api.dart';
+import 'components/jenkinsapi/impl/jenkins_api_impl.dart';
+import 'components/navigator/navigator_service.dart';
 import 'components/settings/api/settings.dart';
+import 'components/settings/impl/settings_impl.dart';
+import 'main.locator.dart';
+import 'main.router.dart';
+import 'pages/jenkins_job_page.dart';
+import 'pages/jenkins_view_page.dart';
+import 'pages/main_page.dart';
+import 'pages/settings_page.dart';
 
 const pageSettings = '/settings';
 
@@ -30,6 +31,9 @@ void main() {
     ),
     MaterialRoute(
       page: SettingsPage,
+    ),
+    MaterialRoute(
+      page: JenkinsJobPage,
     ),
   ],
   dependencies: [
