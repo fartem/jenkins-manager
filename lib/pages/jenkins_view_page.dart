@@ -7,7 +7,8 @@ import '../components/jenkinsapi/api/entities/jenkins_view.dart';
 import '../components/jenkinsapi/api/jenkins_api.dart';
 import '../components/navigator/navigator_service.dart';
 import '../components/settings/api/settings.dart';
-import '../components/ui/ui_utils.dart';
+import '../components/ui/widgets.dart';
+import '../extensions/jenkins_build_result_extensions.dart';
 import '../main.locator.dart';
 import '../main.router.dart';
 
@@ -115,7 +116,7 @@ class _JenkinsJobView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jenkinsJobStatus = _jenkinsJob.lastBuild?.result ?? JenkinsBuildResult.notBuild;
+    final jenkinsBuildResult = _jenkinsJob.lastBuild?.result ?? JenkinsBuildResult.notBuild;
     return ListTile(
       leading: leadingForJenkinsJob(
         _jenkinsJob.lastBuild,
@@ -124,50 +125,27 @@ class _JenkinsJobView extends StatelessWidget {
         _jenkinsJob.name,
       ),
       subtitle: Text(
-        textForJenkinsBuildStatus(
-          jenkinsJobStatus,
-        ),
+        jenkinsBuildResult.title(),
       ),
       onTap: _jenkinsJobTap,
     );
   }
 
   Widget leadingForJenkinsJob(JenkinsBuild? jenkinsBuild) {
-    final icon = iconForJenkinsBuildStatus(
-      jenkinsBuild?.result ?? JenkinsBuildResult.notBuild,
-    );
-    if (jenkinsBuild == null) {
-      return Icon(
-        icon,
-        size: 36,
-        color: colorForJenkinsBuildStatus(
-          JenkinsBuildResult.notBuild,
-        ),
-      );
-    }
-    if (jenkinsBuild.building) {
+    final jenkinsBuildResult = jenkinsBuild?.result ?? JenkinsBuildResult.notBuild;
+    if (jenkinsBuild?.building) {
       return RotationTransition(
         turns: Tween(
           begin: 0.0,
           end: 1.0,
         ).animate(_animationController),
-        child: Icon(
-          icon,
-          size: 36,
-          color: colorForJenkinsBuildStatus(
-            JenkinsBuildResult.success,
-          ),
+        child: JenkinsBuildResultIcon(
+          jenkinsBuildResult,
         ),
       );
     }
-    return Icon(
-      iconForJenkinsBuildStatus(
-        jenkinsBuild.result,
-      ),
-      size: 36,
-      color: colorForJenkinsBuildStatus(
-        jenkinsBuild.result,
-      ),
+    return JenkinsBuildResultIcon(
+      jenkinsBuildResult,
     );
   }
 }
