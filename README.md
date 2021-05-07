@@ -26,6 +26,10 @@ Soon.
 
 Soon.
 
+## How to build app for Linux
+
+Soon.
+
 ## How to contribute
 
 Read [Commit Convention](https://github.com/fartem/repository-rules/blob/master/commit-convention/COMMIT_CONVENTION.md). Make sure your build is green before you contribute your pull request. Then:

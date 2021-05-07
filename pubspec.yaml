@@ -1,6 +1,6 @@
 name: jenkins_manager
 description: Jenkins Manager
-version: 0.2.1+3
+version: 0.2.2+4
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
