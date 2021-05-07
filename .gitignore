@@ -100,7 +100,6 @@ unlinked_spec.ds
 **/macos/Flutter/Flutter-Profile.xcconfig
 
 # Linux
-
 **/flutter/ephemeral
 
 # Coverage
