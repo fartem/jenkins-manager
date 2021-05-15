@@ -53,10 +53,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Jenkins Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: MainPage(),
+      theme: ThemeData.light().copyWith(
+        accentColor: Colors.blue,
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        accentColor: Colors.blue,
+      ),
       navigatorKey: locator<NavigatorService>().navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
     );
