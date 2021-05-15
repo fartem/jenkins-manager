@@ -54,6 +54,7 @@ class JenkinsViewPageState extends State<JenkinsViewPage> with TickerProviderSta
     );
   }
 
+  // ignore: avoid-returning-widgets
   Widget body(JenkinsViewPageViewModel model) {
     if (model.isBusy) {
       return Center(
@@ -131,6 +132,7 @@ class _JenkinsJobView extends StatelessWidget {
     );
   }
 
+  // ignore: avoid-returning-widgets
   Widget leadingForJenkinsJob(JenkinsBuild? jenkinsBuild) {
     final jenkinsBuildResult = jenkinsBuild?.result ?? JenkinsBuildResult.notBuild;
     if (jenkinsBuild?.building) {
