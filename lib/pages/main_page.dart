@@ -42,6 +42,7 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  // ignore: avoid-returning-widgets
   Widget _loader() {
     return Center(
       child: CircularProgressIndicator(),
