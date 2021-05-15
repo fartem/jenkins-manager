@@ -3,11 +3,11 @@ import 'entities/jenkins_job.dart';
 import 'entities/jenkins_view.dart';
 
 abstract class JenkinsApi {
-  Future<List<JenkinsView>> fetchJenkinsViews(
+  Future<List<JenkinsView>> jenkinsViews(
     JenkinsCredentials jenkinsCredentials,
   );
 
-  Future<List<JenkinsJob>> fetchJenkinsJobsFor(
+  Future<List<JenkinsJob>> jenkinsJobs(
     JenkinsCredentials jenkinsCredentials,
     JenkinsView jenkinsView,
   );

@@ -97,7 +97,7 @@ class JenkinsViewPageViewModel extends FutureViewModel<List<JenkinsJob>> {
       );
 
   @override
-  Future<List<JenkinsJob>> futureToRun() => _jenkinsApi.fetchJenkinsJobsFor(
+  Future<List<JenkinsJob>> futureToRun() => _jenkinsApi.jenkinsJobs(
         _settings.jenkinsCredentials(),
         jenkinsView,
       );

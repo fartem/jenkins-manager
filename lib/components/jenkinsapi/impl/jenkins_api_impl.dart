@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,7 +11,7 @@ import '../api/jenkins_api.dart';
 
 class JenkinsApiImpl extends JenkinsApi {
   @override
-  Future<List<JenkinsView>> fetchJenkinsViews(
+  Future<List<JenkinsView>> jenkinsViews(
     JenkinsCredentials jenkinsCredentials,
   ) async {
     final link = 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs]';
@@ -39,7 +40,7 @@ class JenkinsApiImpl extends JenkinsApi {
   String _auth(String user, String token) => 'Basic ${base64Encode(utf8.encode('$user:$token'))}';
 
   @override
-  Future<List<JenkinsJob>> fetchJenkinsJobsFor(
+  Future<List<JenkinsJob>> jenkinsJobs(
     JenkinsCredentials jenkinsCredentials,
     JenkinsView jenkinsView,
   ) async {
