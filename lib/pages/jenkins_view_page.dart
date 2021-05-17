@@ -135,7 +135,7 @@ class _JenkinsJobView extends StatelessWidget {
   // ignore: avoid-returning-widgets
   Widget leadingForJenkinsJob(JenkinsBuild? jenkinsBuild) {
     final jenkinsBuildResult = jenkinsBuild?.result ?? JenkinsBuildResult.notBuild;
-    if (jenkinsBuild?.building) {
+    if (jenkinsBuild?.building ?? false) {
       return RotationTransition(
         turns: Tween(
           begin: 0.0,

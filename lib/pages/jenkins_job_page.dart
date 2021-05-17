@@ -43,7 +43,7 @@ class JenkinsJobPageState extends State<JenkinsJobPage> {
               ),
               _JenkinsParameterView(
                 'Health',
-                jenkinsJob.healthReport,
+                jenkinsJob.healthReport ?? 'No reports',
               ),
               _JenkinsParameterView(
                 'Label',
