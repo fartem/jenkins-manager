@@ -8,10 +8,10 @@ import 'components/settings/api/settings.dart';
 import 'components/settings/impl/settings_impl.dart';
 import 'main.locator.dart';
 import 'main.router.dart';
-import 'pages/jenkins_job_page.dart';
-import 'pages/jenkins_view_page.dart';
-import 'pages/main_page.dart';
-import 'pages/settings_page.dart';
+import 'pages/jenkinsjob/jenkins_job_page.dart';
+import 'pages/jenkinsview/jenkins_view_page.dart';
+import 'pages/main/main_page.dart';
+import 'pages/settings/settings_page.dart';
 
 void main() {
   setupLocator();
