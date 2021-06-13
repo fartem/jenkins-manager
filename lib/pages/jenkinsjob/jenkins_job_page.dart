@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../components/jenkinsapi/api/entities/jenkins_job.dart';
-import '../components/jenkinsapi/api/jenkins_api.dart';
-import '../components/settings/api/settings.dart';
-import '../components/ui/widgets.dart';
-import '../main.locator.dart';
+import '../../components/ui/widgets.dart';
+import 'jenkins_job_page_view_model.dart';
 
 class JenkinsJobPage extends StatefulWidget {
   final _jenkinsJob;
@@ -71,23 +68,6 @@ class JenkinsJobPageState extends State<JenkinsJobPage> {
         );
       },
     );
-  }
-}
-
-class JenkinsJobPageViewModel extends ChangeNotifier {
-  final _jenkinsApi = locator<JenkinsApi>();
-  final _settings = locator<Settings>();
-
-  final JenkinsJob jenkinsJob;
-
-  JenkinsJobPageViewModel(this.jenkinsJob);
-
-  Future<void> jobPressed() async {
-    await _jenkinsApi.runJenkinsJob(
-      _settings.jenkinsCredentials(),
-      jenkinsJob,
-    );
-    notifyListeners();
   }
 }
 

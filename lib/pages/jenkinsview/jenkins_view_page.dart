@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../components/jenkinsapi/api/entities/jenkins_build.dart';
-import '../components/jenkinsapi/api/entities/jenkins_job.dart';
-import '../components/jenkinsapi/api/entities/jenkins_view.dart';
-import '../components/jenkinsapi/api/jenkins_api.dart';
-import '../components/navigator/navigator_service.dart';
-import '../components/settings/api/settings.dart';
-import '../components/ui/widgets.dart';
-import '../extensions/jenkins_build_result_extensions.dart';
-import '../main.locator.dart';
-import '../main.router.dart';
+import '../../components/jenkinsapi/api/entities/jenkins_build.dart';
+import '../../components/jenkinsapi/api/entities/jenkins_job.dart';
+import '../../components/jenkinsapi/api/entities/jenkins_view.dart';
+import '../../components/ui/widgets.dart';
+import '../../extensions/jenkins_build_result_extensions.dart';
+import 'jenkins_view_page_view_model.dart';
 
 class JenkinsViewPage extends StatefulWidget {
   final JenkinsView _jenkinsView;
@@ -79,29 +75,6 @@ class JenkinsViewPageState extends State<JenkinsViewPage> with TickerProviderSta
     _animationController.dispose();
     super.dispose();
   }
-}
-
-class JenkinsViewPageViewModel extends FutureViewModel<List<JenkinsJob>> {
-  final _jenkinsApi = locator<JenkinsApi>();
-  final _settings = locator<Settings>();
-  final _navigatorService = locator<NavigatorService>();
-
-  final JenkinsView jenkinsView;
-
-  JenkinsViewPageViewModel(this.jenkinsView);
-
-  void onJenkinsJobTapped(JenkinsJob jenkinsJob) => _navigatorService.navigateTo(
-        Routes.jenkinsJobPage,
-        arguments: JenkinsJobPageArguments(
-          jenkinsJob: jenkinsJob,
-        ),
-      );
-
-  @override
-  Future<List<JenkinsJob>> futureToRun() => _jenkinsApi.jenkinsJobs(
-        _settings.jenkinsCredentials(),
-        jenkinsView,
-      );
 }
 
 class _JenkinsJobView extends StatelessWidget {
