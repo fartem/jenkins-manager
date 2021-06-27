@@ -10,10 +10,6 @@ App for managing some Jenkins actions.
 
 Right now the project in a development state. If you have an issue or advice please tell about it [here](https://github.com/fartem/jenkins-manager/issues).
 
-## Before build
-
-Before build you need to generate `locator` (DI) and `routes` (navigation entitites) for project. Run from a shell:
-
 ```shell
 flutter pub run build_runner build
 ```
