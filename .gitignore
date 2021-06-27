@@ -119,9 +119,3 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
-
-# Generated
-**/*.g.dart
-**/*.locator.dart
-**/*.router.dart
-**/generated_plugin_registrant.dart
