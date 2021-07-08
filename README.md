@@ -8,7 +8,7 @@ App for managing some Jenkins actions.
 
 ## Feedback
 
-Right now the project in a development state. If you have an issue or advice please tell about it [here](https://github.com/fartem/jenkins-manager/issues).
+Right now a project in a development state. If you have an issue or advice please tell about it [here](https://github.com/fartem/jenkins-manager/issues).
 
 ```shell
 flutter pub run build_runner build
@@ -39,6 +39,7 @@ $ flutter pub global activate dart_enum_to_string_check
 $ flutter pub global run dart_enum_to_string_check
 $ flutter pub global activate dart_code_metrics
 $ flutter pub global run dart_code_metrics:metrics lib
+$ flutter format -n --set-exit-if-chenged lib
 $ flutter analyze
 ```
 
