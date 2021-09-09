@@ -55,10 +55,16 @@ class App extends StatelessWidget {
       title: 'Jenkins Manager',
       home: MainPage(),
       theme: ThemeData.light().copyWith(
-        accentColor: Colors.blue,
+        colorScheme: ColorScheme.light(
+          primary: Colors.blue,
+          secondary: Colors.blue,
+        ),
       ),
       darkTheme: ThemeData.dark().copyWith(
-        accentColor: Colors.blue,
+        colorScheme: ColorScheme.dark(
+          primary: Colors.blue,
+          secondary: Colors.blue,
+        ),
       ),
       navigatorKey: locator<NavigatorService>().navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
