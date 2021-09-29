@@ -17,15 +17,9 @@ class JenkinsViewView extends StatelessWidget {
       ),
       builder: (context, model, widget) {
         return ListTile(
-          leading: Icon(
-            Icons.folder,
-          ),
-          title: Text(
-            model.jenkinsView.name,
-          ),
-          subtitle: Text(
-            'Jobs: ${model.jenkinsView.jobsCount}',
-          ),
+          leading: Icon(Icons.folder),
+          title: Text(model.jenkinsView.name),
+          subtitle: Text('Jobs: ${model.jenkinsView.jobsCount}'),
           onTap: () => model.jenkinsViewTapped(),
         );
       },

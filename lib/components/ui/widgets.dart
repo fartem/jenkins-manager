@@ -9,11 +9,7 @@ class FixedSpacer extends StatelessWidget {
   const FixedSpacer(this._height);
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: _height,
-    );
-  }
+  Widget build(BuildContext context) => SizedBox(height: _height);
 }
 
 class JenkinsBuildResultIcon extends StatelessWidget {

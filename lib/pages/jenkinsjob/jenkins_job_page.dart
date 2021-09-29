@@ -28,7 +28,7 @@ class JenkinsJobPageState extends State<JenkinsJobPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              jenkinsJob.name,
+              jenkinsJob.name
             ),
           ),
           body: Column(
@@ -54,7 +54,7 @@ class JenkinsJobPageState extends State<JenkinsJobPage> {
                   child: Text(
                     'Build'.toUpperCase(),
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 20
                     ),
                   ),
                   onPressed: () => model.jobPressed(),
