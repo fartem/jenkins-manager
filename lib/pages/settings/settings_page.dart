@@ -16,14 +16,10 @@ class SettingsPageState extends State<StatefulWidget> {
       builder: (context, model, widget) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-              'Settings',
-            ),
+            title: Text('Settings'),
             actions: [
               IconButton(
-                icon: Icon(
-                  Icons.done,
-                ),
+                icon: Icon(Icons.done),
                 onPressed: () => model.setJenkinsCredentials(),
               ),
             ],
@@ -31,19 +27,19 @@ class SettingsPageState extends State<StatefulWidget> {
           body: ListView(
             children: [
               _JenkinsPageViewInputField(
-                model.address,
-                'Address (starts with http/https)',
-                (newText) => model.address = newText,
+                initialValue: model.address,
+                hint: 'Address (starts with http/https)',
+                onChanged: (newText) => model.address = newText,
               ),
               _JenkinsPageViewInputField(
-                model.user,
-                'User',
-                (newText) => model.user = newText,
+                initialValue: model.user,
+                hint: 'User',
+                onChanged: (newText) => model.user = newText,
               ),
               _JenkinsPageViewInputField(
-                model.token,
-                'Token',
-                (newText) => model.token = newText,
+                initialValue: model.token,
+                hint: 'Token',
+                onChanged: (newText) => model.token = newText,
               ),
             ],
           ),
@@ -54,25 +50,25 @@ class SettingsPageState extends State<StatefulWidget> {
 }
 
 class _JenkinsPageViewInputField extends StatelessWidget {
-  final String _initialValue;
-  final String _hint;
-  final Function(String newText) _onChanged;
+  final String initialValue;
+  final String hint;
+  final Function(String newText) onChanged;
 
-  _JenkinsPageViewInputField(
-    this._initialValue,
-    this._hint,
-    this._onChanged,
-  );
+  _JenkinsPageViewInputField({
+    required this.initialValue,
+    required this.hint,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: TextFormField(
-        initialValue: _initialValue,
-        onChanged: _onChanged,
+        initialValue: initialValue,
+        onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: _hint,
+          hintText: hint,
         ),
       ),
     );

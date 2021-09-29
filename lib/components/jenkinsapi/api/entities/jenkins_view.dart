@@ -12,10 +12,10 @@ class JenkinsView {
   )
   final int jobsCount;
 
-  JenkinsView(
-    this.name,
-    this.jobsCount,
-  );
+  JenkinsView({
+    required this.name,
+    required this.jobsCount,
+  });
 
   factory JenkinsView.fromJson(Map<String, dynamic> json) => _$JenkinsViewFromJson(json);
 }

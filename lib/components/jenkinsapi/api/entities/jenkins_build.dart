@@ -11,12 +11,12 @@ class JenkinsBuild {
   @JsonKey(fromJson: jenkinsBuildStatusFromJson)
   final JenkinsBuildResult result;
 
-  JenkinsBuild(
-    this.name,
-    this.building,
-    this.duration,
-    this.result,
-  );
+  JenkinsBuild({
+    required this.name,
+    required this.building,
+    required this.duration,
+    required this.result,
+  });
 
   factory JenkinsBuild.fromJson(Map<String, dynamic> json) => _$JenkinsBuildFromJson(json);
 }

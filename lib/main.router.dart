@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import 'components/jenkinsapi/api/entities/jenkins_job.dart';
 import 'components/jenkinsapi/api/entities/jenkins_view.dart';
 import 'pages/jenkinsjob/jenkins_job_page.dart';
 import 'pages/jenkinsview/jenkins_view_page.dart';
@@ -37,6 +38,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.settingsPage, page: SettingsPage),
     RouteDef(Routes.jenkinsJobPage, page: JenkinsJobPage),
   ];
+
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
@@ -49,7 +51,7 @@ class StackedRouter extends RouterBase {
     JenkinsViewPage: (data) {
       var args = data.getArgs<JenkinsViewPageArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => JenkinsViewPage(args.jenkinsView),
+        builder: (context) => JenkinsViewPage(jenkinsView: args.jenkinsView),
         settings: data,
       );
     },
@@ -62,7 +64,10 @@ class StackedRouter extends RouterBase {
     JenkinsJobPage: (data) {
       var args = data.getArgs<JenkinsJobPageArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => JenkinsJobPage(args.jenkinsJob),
+        builder: (context) => JenkinsJobPage(
+          key: args.key,
+          jenkinsJob: args.jenkinsJob,
+        ),
         settings: data,
       );
     },
@@ -76,11 +81,14 @@ class StackedRouter extends RouterBase {
 /// JenkinsViewPage arguments holder class
 class JenkinsViewPageArguments {
   final JenkinsView jenkinsView;
+
   JenkinsViewPageArguments({required this.jenkinsView});
 }
 
 /// JenkinsJobPage arguments holder class
 class JenkinsJobPageArguments {
-  final dynamic jenkinsJob;
-  JenkinsJobPageArguments({required this.jenkinsJob});
+  final Key? key;
+  final JenkinsJob jenkinsJob;
+
+  JenkinsJobPageArguments({this.key, required this.jenkinsJob});
 }

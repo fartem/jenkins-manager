@@ -23,10 +23,10 @@ class SettingsPageViewModel extends ReactiveViewModel {
 
   Future<void> setJenkinsCredentials() async {
     _settings.setJenkinsCredentials(
-      JenkinsCredentials(
-        address,
-        user,
-        token,
+      jenkinsCredentials: JenkinsCredentials(
+        address: address,
+        user: user,
+        token: token,
       ),
     );
     _navigatorService.back();

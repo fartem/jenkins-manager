@@ -8,15 +8,14 @@ part of 'jenkins_build.dart';
 
 JenkinsBuild _$JenkinsBuildFromJson(Map<String, dynamic> json) {
   return JenkinsBuild(
-    json['name'],
-    json['building'],
-    json['duration'],
-    jenkinsBuildStatusFromJson(json['result'] as String?),
+    name: json['name'],
+    building: json['building'],
+    duration: json['duration'],
+    result: jenkinsBuildStatusFromJson(json['result'] as String?),
   );
 }
 
-Map<String, dynamic> _$JenkinsBuildToJson(JenkinsBuild instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$JenkinsBuildToJson(JenkinsBuild instance) => <String, dynamic>{
       'name': instance.name,
       'building': instance.building,
       'duration': instance.duration,

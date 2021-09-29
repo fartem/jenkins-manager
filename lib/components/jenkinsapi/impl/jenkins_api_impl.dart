@@ -11,9 +11,9 @@ import '../api/jenkins_api.dart';
 
 class JenkinsApiImpl extends JenkinsApi {
   @override
-  Future<List<JenkinsView>> jenkinsViews(
-    JenkinsCredentials jenkinsCredentials,
-  ) async {
+  Future<List<JenkinsView>> jenkinsViews({
+    required JenkinsCredentials jenkinsCredentials,
+  }) async {
     final link = 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs]';
     final response = await get(
       Uri.parse(link),
@@ -40,10 +40,10 @@ class JenkinsApiImpl extends JenkinsApi {
   String _auth(String user, String token) => 'Basic ${base64Encode(utf8.encode('$user:$token'))}';
 
   @override
-  Future<List<JenkinsJob>> jenkinsJobs(
-    JenkinsCredentials jenkinsCredentials,
-    JenkinsView jenkinsView,
-  ) async {
+  Future<List<JenkinsJob>> jenkinsJobs({
+    required JenkinsCredentials jenkinsCredentials,
+    required JenkinsView jenkinsView,
+  }) async {
     final link =
         'http://${jenkinsCredentials.address}/view/${jenkinsView.name}/api/json?tree=jobs[name,url,description,healthReport[description],labelExpression,lastBuild[building,fullDisplayName,result,duration]]';
     final response = await get(
@@ -69,10 +69,10 @@ class JenkinsApiImpl extends JenkinsApi {
   }
 
   @override
-  Future<bool> runJenkinsJob(
-    JenkinsCredentials jenkinsCredentials,
-    JenkinsJob jenkinsJob,
-  ) async {
+  Future<bool> runJenkinsJob({
+    required JenkinsCredentials jenkinsCredentials,
+    required JenkinsJob jenkinsJob,
+  }) async {
     final link = 'http://${jenkinsCredentials.address}/job/${jenkinsJob.name}/build';
     final response = await post(
       Uri.parse(link),

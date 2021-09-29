@@ -61,7 +61,9 @@ class MainPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSettingsPress(BuildContext context) => locator<NavigatorService>().navigateTo(Routes.settingsPage);
+  void onSettingsPress(BuildContext context) => locator<NavigatorService>().navigateTo(
+        routeName: Routes.settingsPage,
+      );
 }
 
 enum MainPageViewModelState {

@@ -11,7 +11,7 @@ class JenkinsViewsViewModel extends ReactiveViewModel {
 
   Future<List<JenkinsView>> fetchJenkinsViews() async {
     return _jenkinsApi.jenkinsViews(
-      _settings.jenkinsCredentials(),
+      jenkinsCredentials: _settings.jenkinsCredentials(),
     );
   }
 

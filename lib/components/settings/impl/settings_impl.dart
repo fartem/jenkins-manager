@@ -21,9 +21,9 @@ class SettingsImpl extends Settings {
     _prefs = await SharedPreferences.getInstance();
     _jenkinsCredential = ReactiveValue(
       JenkinsCredentials(
-        _jenkinsAddress(),
-        _jenkinsUser(),
-        _jenkinsToken(),
+        address: _prefs.getString(_keyJenkinsAddress) ?? _defaultJenkinsAddress,
+        user: _prefs.getString(_keyJenkinsUser) ?? _defaultJenkinsUser,
+        token: _prefs.getString(_keyJenkinsToken) ?? _defaultJenkinsToken,
       ),
     );
     listenToReactiveValues(
@@ -37,37 +37,21 @@ class SettingsImpl extends Settings {
   JenkinsCredentials jenkinsCredentials() => _jenkinsCredential.value;
 
   @override
-  Future<void> setJenkinsCredentials(JenkinsCredentials jenkinsCredentials) async {
+  Future<void> setJenkinsCredentials({
+    required JenkinsCredentials jenkinsCredentials,
+  }) async {
     _jenkinsCredential.value = jenkinsCredentials;
-    _setJenkinsAddress(jenkinsCredentials.address);
-    _setJenkinsUser(jenkinsCredentials.user);
-    _setJenkinsToken(jenkinsCredentials.token);
-  }
-
-  String _jenkinsAddress() => _prefs.getString(_keyJenkinsAddress) ?? _defaultJenkinsAddress;
-
-  Future<void> _setJenkinsAddress(String jenkinsAddress) async {
     _prefs.setString(
       _keyJenkinsAddress,
-      jenkinsAddress,
+      jenkinsCredentials.address,
     );
-  }
-
-  String _jenkinsUser() => _prefs.getString(_keyJenkinsUser) ?? _defaultJenkinsUser;
-
-  Future<void> _setJenkinsUser(String jenkinsUser) async {
     _prefs.setString(
       _keyJenkinsUser,
-      jenkinsUser,
+      jenkinsCredentials.user,
     );
-  }
-
-  String _jenkinsToken() => _prefs.getString(_keyJenkinsToken) ?? _defaultJenkinsToken;
-
-  Future<void> _setJenkinsToken(String jenkinsToken) async {
     _prefs.setString(
       _keyJenkinsToken,
-      jenkinsToken,
+      jenkinsCredentials.token,
     );
   }
 }

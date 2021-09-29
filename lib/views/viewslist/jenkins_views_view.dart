@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../components/jenkinsapi/api/entities/jenkins_view.dart';
-import '../view/jenkins_view_view.dart';
+import '../../components/navigator/navigator_service.dart';
+import '../../main.locator.dart';
+import '../../main.router.dart';
 import 'jenkins_views_view_model.dart';
 
 class JenkinsViewsView extends StatefulWidget {
@@ -25,9 +27,20 @@ class JenkinsViewsState extends State<JenkinsViewsView> {
               );
             }
             return ListView.builder(
-              itemBuilder: (context, index) => JenkinsViewView(
-                snapshot.data![index],
-              ),
+              itemBuilder: (context, index) {
+                final jenkinsView = snapshot.data![index];
+                return ListTile(
+                  leading: Icon(Icons.folder),
+                  title: Text(jenkinsView.name),
+                  subtitle: Text('Jobs: ${jenkinsView.jobsCount}'),
+                  onTap: () => locator<NavigatorService>().navigateTo(
+                    routeName: Routes.jenkinsViewPage,
+                    arguments: JenkinsViewPageArguments(
+                      jenkinsView: jenkinsView,
+                    ),
+                  ),
+                );
+              },
               itemCount: snapshot.data!.length,
             );
           },

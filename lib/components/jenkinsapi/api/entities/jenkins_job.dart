@@ -18,14 +18,14 @@ class JenkinsJob {
   @JsonKey(fromJson: _jenkinsBuildFromJson)
   final JenkinsBuild? lastBuild;
 
-  JenkinsJob(
-    this.name,
+  JenkinsJob({
+    required this.name,
     this.description,
     this.healthReport,
-    this.labelExpression,
-    this.url,
+    required this.labelExpression,
+    required this.url,
     this.lastBuild,
-  );
+  });
 
   factory JenkinsJob.fromJson(Map<String, dynamic> json) => _$JenkinsJobFromJson(json);
 }
