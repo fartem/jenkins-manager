@@ -12,44 +12,46 @@ const _defaultJenkinsUser = 'jenkins';
 const _defaultJenkinsToken = 'jenkins_token';
 
 class SettingsImpl extends Settings {
-  late SharedPreferences _prefs;
+  SharedPreferences? _prefs;
 
-  late ReactiveValue<JenkinsCredentials> _jenkinsCredential;
+  late ReactiveValue<JenkinsCredentials> _jenkinsCredentials;
 
   @override
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
-    _jenkinsCredential = ReactiveValue(
-      JenkinsCredentials(
-        address: _prefs.getString(_keyJenkinsAddress) ?? _defaultJenkinsAddress,
-        user: _prefs.getString(_keyJenkinsUser) ?? _defaultJenkinsUser,
-        token: _prefs.getString(_keyJenkinsToken) ?? _defaultJenkinsToken,
-      ),
-    );
-    listenToReactiveValues(
-      [
-        _jenkinsCredential,
-      ],
-    );
+    if (_prefs == null) {
+      _prefs = await SharedPreferences.getInstance();
+      _jenkinsCredentials = ReactiveValue(
+        JenkinsCredentials(
+          address: _prefs!.getString(_keyJenkinsAddress) ?? _defaultJenkinsAddress,
+          user: _prefs!.getString(_keyJenkinsUser) ?? _defaultJenkinsUser,
+          token: _prefs!.getString(_keyJenkinsToken) ?? _defaultJenkinsToken,
+        ),
+      );
+      listenToReactiveValues(
+        [
+          _jenkinsCredentials,
+        ],
+      );
+    }
   }
 
   @override
-  JenkinsCredentials jenkinsCredentials() => _jenkinsCredential.value;
+  JenkinsCredentials jenkinsCredentials() => _jenkinsCredentials.value;
 
   @override
   Future<void> setJenkinsCredentials({
     required JenkinsCredentials jenkinsCredentials,
   }) async {
-    _jenkinsCredential.value = jenkinsCredentials;
-    _prefs.setString(
+    _jenkinsCredentials.value = jenkinsCredentials;
+    _prefs!.setString(
       _keyJenkinsAddress,
       jenkinsCredentials.address,
     );
-    _prefs.setString(
+    _prefs!.setString(
       _keyJenkinsUser,
       jenkinsCredentials.user,
     );
-    _prefs.setString(
+    _prefs!.setString(
       _keyJenkinsToken,
       jenkinsCredentials.token,
     );

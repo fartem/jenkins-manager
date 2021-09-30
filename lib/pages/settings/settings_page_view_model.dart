@@ -2,7 +2,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../components/settings/api/settings.dart';
 
-class SettingsPageViewModel extends ReactiveViewModel {
+class SettingsPageViewModel extends BaseViewModel {
   final Settings settings;
 
   late String address;
@@ -27,7 +27,4 @@ class SettingsPageViewModel extends ReactiveViewModel {
       ),
     );
   }
-
-  @override
-  List<ReactiveServiceMixin> get reactiveServices => [settings];
 }

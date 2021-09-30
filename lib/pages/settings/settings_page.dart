@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../components/navigator/navigator_service.dart';
 import '../../components/settings/api/settings.dart';
 import '../../main.locator.dart';
 import 'settings_page_view_model.dart';
@@ -24,7 +25,10 @@ class SettingsPageState extends State<StatefulWidget> {
             actions: [
               IconButton(
                 icon: Icon(Icons.done),
-                onPressed: () => model.setJenkinsCredentials(),
+                onPressed: () {
+                  model.setJenkinsCredentials();
+                  locator<NavigatorService>().back();
+                },
               ),
             ],
           ),
