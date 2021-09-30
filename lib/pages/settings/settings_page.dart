@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../components/settings/api/settings.dart';
+import '../../main.locator.dart';
 import 'settings_page_view_model.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -12,7 +14,9 @@ class SettingsPageState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsPageViewModel>.reactive(
-      viewModelBuilder: () => SettingsPageViewModel(),
+      viewModelBuilder: () => SettingsPageViewModel(
+        settings: locator<Settings>(),
+      ),
       builder: (context, model, widget) {
         return Scaffold(
           appBar: AppBar(

@@ -3,18 +3,21 @@ import 'package:stacked/stacked.dart';
 import '../../components/jenkinsapi/api/entities/jenkins_view.dart';
 import '../../components/jenkinsapi/api/jenkins_api.dart';
 import '../../components/settings/api/settings.dart';
-import '../../main.locator.dart';
 
-class JenkinsViewsViewModel extends ReactiveViewModel {
-  final _jenkinsApi = locator<JenkinsApi>();
-  final _settings = locator<Settings>();
+class JenkinsViewsViewModel extends FutureViewModel<List<JenkinsView>> {
+  final JenkinsApi jenkinsApi;
+  final Settings settings;
 
-  Future<List<JenkinsView>> fetchJenkinsViews() async {
-    return _jenkinsApi.jenkinsViews(
-      jenkinsCredentials: _settings.jenkinsCredentials(),
-    );
-  }
+  JenkinsViewsViewModel({
+    required this.jenkinsApi,
+    required this.settings,
+  });
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_settings];
+  Future<List<JenkinsView>> futureToRun() => jenkinsApi.jenkinsViews(
+        jenkinsCredentials: settings.jenkinsCredentials(),
+      );
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [settings];
 }

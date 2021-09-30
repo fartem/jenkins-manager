@@ -1,23 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
-import '../../components/navigator/navigator_service.dart';
 import '../../components/settings/api/settings.dart';
-import '../../main.locator.dart';
-import '../../main.router.dart';
-import 'main_page.dart';
 
-class MainPageViewModel extends ChangeNotifier {
-  final _settings = locator<Settings>();
+class MainPageViewModel extends FutureViewModel {
+  final Settings settings;
 
-  var state = MainPageViewModelState.loading;
+  MainPageViewModel({required this.settings});
 
-  Future<void> init() async {
-    await _settings.init();
-    state = MainPageViewModelState.loaded;
-    notifyListeners();
-  }
-
-  void onSettingsPress(BuildContext context) => locator<NavigatorService>().navigateTo(
-        routeName: Routes.settingsPage,
-      );
+  @override
+  Future futureToRun() => settings.init();
 }
