@@ -1,37 +1,30 @@
 import 'package:stacked/stacked.dart';
 
-import '../../components/navigator/navigator_service.dart';
 import '../../components/settings/api/settings.dart';
-import '../../main.locator.dart';
 
-class SettingsPageViewModel extends ReactiveViewModel {
-  final NavigatorService _navigatorService = locator<NavigatorService>();
-  final Settings _settings = locator<Settings>();
+class SettingsPageViewModel extends BaseViewModel {
+  final Settings settings;
 
   late String address;
   late String user;
   late String token;
 
-  SettingsPageViewModel() {
-    final jenkinsCredentials = _settings.jenkinsCredentials();
+  SettingsPageViewModel({required this.settings}) {
+    final jenkinsCredentials = settings.jenkinsCredentials();
     address = jenkinsCredentials.address;
     user = jenkinsCredentials.user;
     token = jenkinsCredentials.token;
   }
 
-  JenkinsCredentials jenkinsCredentials() => _settings.jenkinsCredentials();
+  JenkinsCredentials jenkinsCredentials() => settings.jenkinsCredentials();
 
   Future<void> setJenkinsCredentials() async {
-    _settings.setJenkinsCredentials(
-      JenkinsCredentials(
-        address,
-        user,
-        token,
+    settings.setJenkinsCredentials(
+      jenkinsCredentials: JenkinsCredentials(
+        address: address,
+        user: user,
+        token: token,
       ),
     );
-    _navigatorService.back();
   }
-
-  @override
-  List<ReactiveServiceMixin> get reactiveServices => [_settings];
 }

@@ -5,9 +5,9 @@ abstract class Settings with ReactiveServiceMixin {
 
   JenkinsCredentials jenkinsCredentials();
 
-  Future<void> setJenkinsCredentials(
-    JenkinsCredentials jenkinsCredentials,
-  );
+  Future<void> setJenkinsCredentials({
+    required JenkinsCredentials jenkinsCredentials,
+  });
 }
 
 class JenkinsCredentials {
@@ -15,9 +15,9 @@ class JenkinsCredentials {
   final String user;
   final String token;
 
-  JenkinsCredentials(
-    this.address,
-    this.user,
-    this.token,
-  );
+  JenkinsCredentials({
+    required this.address,
+    required this.user,
+    required this.token,
+  });
 }

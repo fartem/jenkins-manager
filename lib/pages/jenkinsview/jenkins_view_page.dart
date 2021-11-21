@@ -4,14 +4,19 @@ import 'package:stacked/stacked.dart';
 import '../../components/jenkinsapi/api/entities/jenkins_build.dart';
 import '../../components/jenkinsapi/api/entities/jenkins_job.dart';
 import '../../components/jenkinsapi/api/entities/jenkins_view.dart';
+import '../../components/jenkinsapi/api/jenkins_api.dart';
+import '../../components/navigator/navigator_service.dart';
+import '../../components/settings/api/settings.dart';
 import '../../components/ui/widgets.dart';
 import '../../extensions/jenkins_build_result_extensions.dart';
+import '../../main.locator.dart';
+import '../../main.router.dart';
 import 'jenkins_view_page_view_model.dart';
 
 class JenkinsViewPage extends StatefulWidget {
-  final JenkinsView _jenkinsView;
+  final JenkinsView jenkinsView;
 
-  JenkinsViewPage(this._jenkinsView);
+  JenkinsViewPage({required this.jenkinsView});
 
   @override
   State<StatefulWidget> createState() => JenkinsViewPageState();
@@ -35,7 +40,9 @@ class JenkinsViewPageState extends State<JenkinsViewPage> with TickerProviderSta
   Widget build(BuildContext context) {
     return ViewModelBuilder<JenkinsViewPageViewModel>.reactive(
       viewModelBuilder: () => JenkinsViewPageViewModel(
-        widget._jenkinsView,
+        jenkinsView: widget.jenkinsView,
+        jenkinsApi: locator<JenkinsApi>(),
+        settings: locator<Settings>(),
       ),
       builder: (context, model, widget) {
         return Scaffold(
@@ -44,29 +51,28 @@ class JenkinsViewPageState extends State<JenkinsViewPage> with TickerProviderSta
               model.jenkinsView.name,
             ),
           ),
-          body: body(model),
+          body: model.isBusy
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    final jenkinsJob = model.data![index];
+                    return _JenkinsJobView(
+                      jenkinsJob: jenkinsJob,
+                      jenkinsJobTap: () => locator<NavigatorService>().navigateTo(
+                        routeName: Routes.jenkinsJobPage,
+                        arguments: JenkinsJobPageArguments(
+                          jenkinsJob: jenkinsJob,
+                        ),
+                      ),
+                      animationController: _animationController,
+                    );
+                  },
+                  itemCount: model.data!.length,
+                ),
         );
       },
-    );
-  }
-
-  // ignore: avoid-returning-widgets
-  Widget body(JenkinsViewPageViewModel model) {
-    if (model.isBusy) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final jenkinsJob = model.data![index];
-        return _JenkinsJobView(
-          jenkinsJob,
-          () => model.onJenkinsJobTapped(jenkinsJob),
-          _animationController,
-        );
-      },
-      itemCount: model.data!.length,
     );
   }
 
@@ -78,30 +84,26 @@ class JenkinsViewPageState extends State<JenkinsViewPage> with TickerProviderSta
 }
 
 class _JenkinsJobView extends StatelessWidget {
-  final JenkinsJob _jenkinsJob;
-  final VoidCallback _jenkinsJobTap;
-  final AnimationController _animationController;
+  final JenkinsJob jenkinsJob;
+  final VoidCallback jenkinsJobTap;
+  final AnimationController animationController;
 
-  const _JenkinsJobView(
-    this._jenkinsJob,
-    this._jenkinsJobTap,
-    this._animationController,
-  );
+  const _JenkinsJobView({
+    required this.jenkinsJob,
+    required this.jenkinsJobTap,
+    required this.animationController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final jenkinsBuildResult = _jenkinsJob.lastBuild?.result ?? JenkinsBuildResult.notBuild;
+    final jenkinsBuildResult = jenkinsJob.lastBuild?.result ?? JenkinsBuildResult.notBuild;
     return ListTile(
       leading: leadingForJenkinsJob(
-        _jenkinsJob.lastBuild,
+        jenkinsJob.lastBuild,
       ),
-      title: Text(
-        _jenkinsJob.name,
-      ),
-      subtitle: Text(
-        jenkinsBuildResult.title(),
-      ),
-      onTap: _jenkinsJobTap,
+      title: Text(jenkinsJob.name),
+      subtitle: Text(jenkinsBuildResult.title()),
+      onTap: jenkinsJobTap,
     );
   }
 
@@ -113,14 +115,14 @@ class _JenkinsJobView extends StatelessWidget {
         turns: Tween(
           begin: 0.0,
           end: 1.0,
-        ).animate(_animationController),
+        ).animate(animationController),
         child: JenkinsBuildResultIcon(
-          jenkinsBuildResult,
+          jenkinsBuildResult: jenkinsBuildResult,
         ),
       );
     }
     return JenkinsBuildResultIcon(
-      jenkinsBuildResult,
+      jenkinsBuildResult: jenkinsBuildResult,
     );
   }
 }

@@ -8,13 +8,12 @@ part of 'jenkins_view.dart';
 
 JenkinsView _$JenkinsViewFromJson(Map<String, dynamic> json) {
   return JenkinsView(
-    json['name'] as String,
-    jenkinsJobsCountFromJson(json['jobs'] as List?),
+    name: json['name'] as String,
+    jobsCount: jenkinsJobsCountFromJson(json['jobs'] as List?),
   );
 }
 
-Map<String, dynamic> _$JenkinsViewToJson(JenkinsView instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$JenkinsViewToJson(JenkinsView instance) => <String, dynamic>{
       'name': instance.name,
       'jobs': instance.jobsCount,
     };
