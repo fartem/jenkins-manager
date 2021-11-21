@@ -1,7 +1,5 @@
 # Jenkins Manager
 
-[![Codemagic](https://api.codemagic.io/apps/60927ef51061817f02ea203f/60927ef51061817f02ea203e/status_badge.svg)](https://codemagic.io/apps/60927ef51061817f02ea203f/60927ef51061817f02ea203e/latest_build)
-
 ## About
 
 App for managing some Jenkins actions.
