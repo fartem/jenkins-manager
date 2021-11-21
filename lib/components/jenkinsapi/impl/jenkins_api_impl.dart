@@ -14,9 +14,8 @@ class JenkinsApiImpl extends JenkinsApi {
   Future<List<JenkinsView>> jenkinsViews({
     required JenkinsCredentials jenkinsCredentials,
   }) async {
-    final link = 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs]';
-    final response = await get(
-      Uri.parse(link),
+    final response = await _get(
+      url: 'http://${jenkinsCredentials.address}/api/json?tree=views[name,jobs]',
       headers: {
         HttpHeaders.authorizationHeader: _auth(
           jenkinsCredentials.user,
@@ -37,6 +36,15 @@ class JenkinsApiImpl extends JenkinsApi {
     );
   }
 
+  Future<Response> _get({
+    required String url,
+    required Map<String, String> headers,
+  }) =>
+      get(
+        Uri.parse(url),
+        headers: headers,
+      );
+
   String _auth(String user, String token) => 'Basic ${base64Encode(utf8.encode('$user:$token'))}';
 
   @override
@@ -44,10 +52,9 @@ class JenkinsApiImpl extends JenkinsApi {
     required JenkinsCredentials jenkinsCredentials,
     required JenkinsView jenkinsView,
   }) async {
-    final link =
-        'http://${jenkinsCredentials.address}/view/${jenkinsView.name}/api/json?tree=jobs[name,url,description,healthReport[description],labelExpression,lastBuild[building,fullDisplayName,result,duration]]';
-    final response = await get(
-      Uri.parse(link),
+    final response = await _get(
+      url:
+          'http://${jenkinsCredentials.address}/view/${jenkinsView.name}/api/json?tree=jobs[name,url,description,healthReport[description],labelExpression,lastBuild[building,fullDisplayName,result,duration]]',
       headers: {
         HttpHeaders.authorizationHeader: _auth(
           jenkinsCredentials.user,
@@ -73,9 +80,8 @@ class JenkinsApiImpl extends JenkinsApi {
     required JenkinsCredentials jenkinsCredentials,
     required JenkinsJob jenkinsJob,
   }) async {
-    final link = 'http://${jenkinsCredentials.address}/job/${jenkinsJob.name}/build';
-    final response = await post(
-      Uri.parse(link),
+    final response = await _post(
+      url: 'http://${jenkinsCredentials.address}/job/${jenkinsJob.name}/build',
       headers: {
         HttpHeaders.authorizationHeader: _auth(
           jenkinsCredentials.user,
@@ -85,4 +91,13 @@ class JenkinsApiImpl extends JenkinsApi {
     );
     return response.statusCode == HttpStatus.created;
   }
+
+  Future<Response> _post({
+    required String url,
+    required Map<String, String> headers,
+  }) =>
+      post(
+        Uri.parse(url),
+        headers: headers,
+      );
 }
